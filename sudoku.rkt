@@ -35,20 +35,20 @@
     [(println (car board)) (draw (rest board))]) ; printing solution line by line
   (exit)) ; stopping if we found one
 
+ ; get particular cell
+(define (getCellIndexes value)
+  (cond
+    [(< value 3) '(0 1 2)]
+    [(> value 5) '(6 7 8)]
+    [else '(3 4 5)]
+    )
+  )
+
 ; getting values in 3x3 cell 
 (define (check3x3 board row column)
-  ; setting which sell we should check
-   (let ((rowIndexes '(3 4 5)) (columnIndexes '(3 4 5)))
-     (cond
-       [(> row 5) (set! rowIndexes '(6 7 8))]
-       [(< row 3) (set! rowIndexes '(0 1 2))])
-     (cond
-       [(> column 5) (set! columnIndexes '(6 7 8))]
-       [(< column 3) (set! columnIndexes '(0 1 2))])
-
-     ; creating a list of values
-     (for*/list ((i rowIndexes)(j columnIndexes))
-        (list-ref (list-ref board i) j))))
+   ; creating a list of values
+   (for*/list ((i (getCellIndexes row))(j (getCellIndexes column)))
+      (list-ref (list-ref board i) j)))
 
 ; checks if we can place value to current cell
 (define (checkCell brd row column cellValue)
